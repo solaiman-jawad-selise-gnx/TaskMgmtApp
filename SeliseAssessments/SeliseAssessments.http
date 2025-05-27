@@ -1,6 +1,0 @@
-@SeliseAssessments_HostAddress = http://localhost:5241
-
-GET {{SeliseAssessments_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

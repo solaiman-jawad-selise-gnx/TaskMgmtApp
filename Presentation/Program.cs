@@ -3,6 +3,7 @@ using Application.RepositoryInterfaces;
 using Infrastructure.DB;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Presentation.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Adding Middleware for exception handling
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 app.MapControllers();

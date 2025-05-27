@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DB;
@@ -29,9 +30,14 @@ public class AppDbContext : DbContext {
                 .HasForeignKey(t => t.TeamId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.Email)
-            .IsUnique();
-       
+        modelBuilder.Entity<User>(user =>
+        {
+            user.HasIndex(u => u.Email).IsUnique();
+            user.HasData(
+                new User { Id = 1, FullName = "Admin", Email = "admin@demo.com", Role = Role.Admin },
+                new User { Id = 2, FullName = "Manager", Email = "manager@demo.com", Role = Role.Manager },
+                new User { Id = 3, FullName = "Employee", Email = "employee@demo.com", Role = Role.Employee }
+            );
+        });
     }
 }
