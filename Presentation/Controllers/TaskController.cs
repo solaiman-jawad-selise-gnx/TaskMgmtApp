@@ -1,12 +1,15 @@
 using Application.Features.TaskMgmt.Commands;
 using Application.Features.TaskMgmt.Queries;
 using Application.QueryParams;
+using Asp.Versioning;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -29,6 +32,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<TaskItem>> GetTaskById(int id)
         {
             var result = await _mediator.Send(new GetTaskByIdQuery { TaskId = id });
@@ -36,7 +40,17 @@ namespace Presentation.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}")]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<TaskItem>> GetTaskByIdV2(int id)
+        {
+            var result = await _mediator.Send(new GetTaskByIdQuery { TaskId = id });
+            if (result == null) return NotFound($"Task with ID {id} not found.");
+            return Ok(result);
+        }
+        
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<TaskItem>> CreateTask([FromBody] CreateTaskCommand command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -45,6 +59,16 @@ namespace Presentation.Controllers
             return CreatedAtAction(nameof(GetTaskById), new { id = result.Id }, result);
         }
 
+        [HttpPost]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<TaskItem>> CreateTaskV2([FromBody] CreateTaskCommand command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var result = await _mediator.Send(command);
+            return Ok("Your task has been created successfully using create task V2");
+        }
+        
         [HttpPut("{id}")]
         public async Task<ActionResult<TaskItem>> UpdateTask(int id, [FromBody] UpdateTaskCommand command)
         {
