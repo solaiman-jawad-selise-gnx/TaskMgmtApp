@@ -56,6 +56,9 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(Role.Employee.ToString()));
 });
 
+// Add Distributed Cache for rate limiting
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddControllers();
 
 builder.Services.AddApiVersioning(
@@ -88,6 +91,9 @@ if (app.Environment.IsDevelopment())
 // Use Authentication middleware
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Adding Middleware for rate limiting
+app.UseMiddleware<RateLimitingMiddleware>();
 
 // Adding Middleware for exception handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();

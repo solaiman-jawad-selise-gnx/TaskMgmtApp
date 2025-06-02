@@ -3,6 +3,7 @@ using Application.Features.UserMgmt.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Middleware.LimitRequestEntity;
 
 namespace Presentation.Controllers
 {
@@ -28,6 +29,7 @@ namespace Presentation.Controllers
         
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
+        [LimitRequests(MaxRequestsInTimeWindow = 1, TimeWindowInSeconds = 3600)] // Limit to 5 requests per hour
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
