@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Presentation.Middleware.ExceptionDTO;
+using Presentation.Middleware.ExceptionResp;
 
 namespace Presentation.Middleware;
 

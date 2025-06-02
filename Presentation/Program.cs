@@ -17,6 +17,9 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddApplicationDependencies();
 
+// Add Distributed Cache for rate limiting
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
@@ -29,6 +32,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Adding Middleware for rate limiting
+app.UseMiddleware<RateLimitingMiddleware>();
 
 // Adding Middleware for exception handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
