@@ -4,6 +4,7 @@ using Infrastructure.DB;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
+// Replace default logging
+builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +36,8 @@ if (app.Environment.IsDevelopment())
 
 // Adding Middleware for exception handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseSerilogRequestLogging();
 
 app.UseAuthorization();
 app.MapControllers();
