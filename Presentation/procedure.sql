@@ -18,7 +18,7 @@ BEGIN
         ti.DueDate AS TaskDueDate
 
     FROM Teams t
-    LEFT JOIN TaskItems ti ON ti.TeamId = t.Id
+    LEFT JOIN Tasks ti ON ti.TeamId = t.Id
     LEFT JOIN Users u ON u.Id = ti.AssignedToUserId
     ORDER BY t.Id, u.Id, ti.Id
 END
