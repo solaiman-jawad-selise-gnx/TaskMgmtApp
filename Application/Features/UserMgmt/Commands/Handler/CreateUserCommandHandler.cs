@@ -23,6 +23,7 @@ public class CreateUserCommandHandler: IRequestHandler<CreateUserCommand, User>
             FullName = request.FullName,
             Email = request.Email,
             Role = role,
+            Password = request.Password 
         };
 
         return await _userMgmtService.CreateUserAsync(user);

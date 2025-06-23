@@ -23,6 +23,7 @@ public class UpdateUserCommandHandler: IRequestHandler<UpdateUserCommand, User>
             FullName = request.FullName,
             Email = request.Email,
             Role = role,
+            Password = request.Password
         };
         return await _userMgmtService.UpdateUserAsync(user);
     }

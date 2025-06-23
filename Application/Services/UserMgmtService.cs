@@ -27,7 +27,13 @@ public class UserMgmtService : IUserMgmtService
     {
         return await _userRepository.AddUserAsync(user);
     }
-    
+
+    public Task<User?> ValidateUserCredentialsAsync(string email, string password)
+    {
+        var user = _userRepository.GetUserByEmailAndPasswordAsync(email, password);
+        return user;
+    }
+
     public async Task<User> UpdateUserAsync(User user)
     {
         return await _userRepository.UpdateUserAsync(user);

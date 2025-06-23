@@ -101,6 +101,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
@@ -117,6 +121,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             Email = "admin@demo.com",
                             FullName = "Admin",
+                            Password = "admin123",
                             Role = 0
                         },
                         new
@@ -124,6 +129,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             Email = "manager@demo.com",
                             FullName = "Manager",
+                            Password = "manager123",
                             Role = 1
                         },
                         new
@@ -131,6 +137,7 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             Email = "employee@demo.com",
                             FullName = "Employee",
+                            Password = "employee123",
                             Role = 2
                         });
                 });
