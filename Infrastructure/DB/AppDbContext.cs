@@ -34,9 +34,9 @@ public class AppDbContext : DbContext {
         {
             user.HasIndex(u => u.Email).IsUnique();
             user.HasData(
-                new User { Id = 1, FullName = "Admin", Email = "admin@demo.com", Role = Role.Admin },
-                new User { Id = 2, FullName = "Manager", Email = "manager@demo.com", Role = Role.Manager },
-                new User { Id = 3, FullName = "Employee", Email = "employee@demo.com", Role = Role.Employee }
+                new User { Id = 1, FullName = "Admin", Email = "admin@demo.com", Role = Role.Admin, Password = "admin123" },
+                new User { Id = 2, FullName = "Manager", Email = "manager@demo.com", Role = Role.Manager, Password = "manager123" },
+                new User { Id = 3, FullName = "Employee", Email = "employee@demo.com", Role = Role.Employee, Password = "employee123" }
             );
         });
     }

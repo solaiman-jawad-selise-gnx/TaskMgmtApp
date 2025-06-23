@@ -33,7 +33,13 @@ public class UserMgmtService : IUserMgmtService
         _logger.LogInformation("Creating user: {@User}", user);
         return await _userRepository.AddUserAsync(user);
     }
-    
+
+    public Task<User?> ValidateUserCredentialsAsync(string email, string password)
+    {
+        var user = _userRepository.GetUserByEmailAndPasswordAsync(email, password);
+        return user;
+    }
+
     public async Task<User> UpdateUserAsync(User user)
     {
         _logger.LogInformation("Updating user: {@User}", user);

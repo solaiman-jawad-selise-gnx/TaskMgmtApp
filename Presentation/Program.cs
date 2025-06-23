@@ -5,6 +5,10 @@ using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Middleware;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Domain.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +21,39 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddApplicationDependencies();
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+        };
+    });
+
+// Authorization policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole(Role.Admin.ToString()));
+
+    options.AddPolicy("ManagerOrAdmin", policy =>
+        policy.RequireRole(Role.Admin.ToString(), Role.Manager.ToString()));
+
+    options.AddPolicy("EmployeesOnly", policy =>
+        policy.RequireRole(Role.Employee.ToString()));
+});
 
 builder.Services.AddControllers();
 
@@ -33,6 +70,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Use Authentication middleware
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Adding Middleware for exception handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
