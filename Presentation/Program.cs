@@ -4,6 +4,7 @@ using Infrastructure.DB;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Middleware;
+using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -58,6 +59,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
+// Replace default logging
+builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,6 +77,8 @@ app.UseAuthorization();
 
 // Adding Middleware for exception handling
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseSerilogRequestLogging();
 
 app.UseAuthorization();
 app.MapControllers();
