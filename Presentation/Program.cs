@@ -23,6 +23,7 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddApplicationDependencies();
 
+builder.Services.AddAutoMapper(typeof(Program));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
     {

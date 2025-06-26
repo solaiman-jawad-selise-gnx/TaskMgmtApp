@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Presentation.Middleware.ExceptionResp;
 using ValidationException = FluentValidation.ValidationException;
+using AutoMapper;
 
 namespace Presentation.Middleware;
 
@@ -39,6 +40,7 @@ public class ExceptionHandlingMiddleware
             KeyNotFoundException _ => new ExceptionResponse(HttpStatusCode.NotFound, "The request key not found."),
             ValidationException _ => new ExceptionResponse(HttpStatusCode.UnprocessableEntity, "Validation exception occurred."),
             UnauthorizedAccessException _ => new ExceptionResponse(HttpStatusCode.Unauthorized, "Unauthorized."),
+            AutoMapperMappingException _ => new ExceptionResponse(HttpStatusCode.BadRequest, "Object mapping error occurred."),
             _ => new ExceptionResponse(HttpStatusCode.InternalServerError, "Internal server error. Please retry later.")
         };
 
