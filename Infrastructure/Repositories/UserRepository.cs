@@ -18,9 +18,9 @@ public class UserRepository : IUserRepository
         return await _context.Users.FindAsync(id);
     }
     
-    public async Task<User?> GetUserByEmailAsync(string email)
+    public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
     }
     
     public async Task<IEnumerable<User>> GetAllUsersAsync()
