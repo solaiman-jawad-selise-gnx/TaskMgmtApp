@@ -1,8 +1,9 @@
 using Application.Features.UserMgmt.Commands;
 using Application.Features.UserMgmt.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Middleware.LimitRequestEntity;
 
 namespace Presentation.Controllers
 {
@@ -26,7 +27,9 @@ namespace Presentation.Controllers
             return Ok(result);
         }
         
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
+        [LimitRequests(MaxRequestsInTimeWindow = 1, TimeWindowInSeconds = 3600)] // Limit to 5 requests per hour
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -35,6 +38,7 @@ namespace Presentation.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = result.Id }, result);
         }
         
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserCommand command)
         {
@@ -45,6 +49,7 @@ namespace Presentation.Controllers
             return Ok(result);
         }
         
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

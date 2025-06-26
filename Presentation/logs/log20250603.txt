@@ -1,0 +1,6 @@
+2025-06-03 19:01:56.836 +06:00 [INF] Fetching tasks with query parameters: {"Status":null,"AssignedToUserId":null,"TeamId":null,"DueDate":null,"Page":1,"PageSize":10,"$type":"TaskQueryParameters"}
+2025-06-03 19:01:59.778 +06:00 [INF] HTTP GET /api/Task responded 200 in 3297.7980 ms
+2025-06-03 19:02:10.963 +06:00 [INF] Fetching tasks with query parameters: {"Status":null,"AssignedToUserId":null,"TeamId":null,"DueDate":null,"Page":1,"PageSize":10,"$type":"TaskQueryParameters"}
+2025-06-03 19:02:11.019 +06:00 [INF] HTTP GET /api/Task responded 200 in 64.6075 ms
+2025-06-03 19:02:19.224 +06:00 [INF] Fetching tasks with query parameters: {"Status":null,"AssignedToUserId":null,"TeamId":null,"DueDate":null,"Page":1,"PageSize":10,"$type":"TaskQueryParameters"}
+2025-06-03 19:02:19.335 +06:00 [INF] HTTP GET /api/Task responded 200 in 116.6112 ms

@@ -2,6 +2,7 @@ using Application.Features.TeamMgmt.Commands;
 using Application.Features.TeamMgmt.Queries;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -16,13 +17,16 @@ namespace Presentation.Controllers
         {
             _mediator = mediator;
         }
+
+        [Authorize(Policy = "ManagerOrAdmin")]
         // GET api/<TeamController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeamById(int id)
         {
             return await _mediator.Send(new GetTeamByIdQuery{TeamId = id});
         }
-
+        
+        [Authorize(Policy = "ManagerOrAdmin")]
         // POST api/<TeamController>
         [HttpPost]
         public async Task<ActionResult<Team>> CreateTeam([FromBody] CreateTeamCommand command)
@@ -32,7 +36,9 @@ namespace Presentation.Controllers
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetTeamById), new { id = result.Id }, result);
         }
-
+        
+        
+        [Authorize(Policy = "ManagerOrAdmin")]
         // PUT api/<TeamController>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Team>> UpdateTeam(int id, [FromBody] UpdateTeamCommand command)
@@ -45,6 +51,7 @@ namespace Presentation.Controllers
         }
 
         // DELETE api/<TeamController>/5
+        [Authorize(Policy = "ManagerOrAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeam(int id)
         {

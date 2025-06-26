@@ -1,0 +1,271 @@
+﻿{
+  "info": {
+    "name": "Task Management API",
+    "_postman_id": "task-mgmt-api-collection",
+    "description": "Postman collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Get All Tasks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5273/api/task",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task"]
+            }
+          }
+        },
+        {
+          "name": "Get Task by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5273/api/task/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Sample Task\",\n  \"description\": \"Test task\",\n  \"assignedTo\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/task",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task"]
+            }
+          }
+        },
+        {
+          "name": "Update Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taskId\": 1,\n  \"title\": \"Updated Task\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/task/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Task Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taskId\": 1,\n  \"status\": \"Completed\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/task/UpdateTaskStatus/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task", "UpdateTaskStatus", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5273/api/task/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "task", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Get Team by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5273/api/team/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "team", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Engineering\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/team",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "team"]
+            }
+          }
+        },
+        {
+          "name": "Update Team",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"name\": \"DevOps\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/team/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "team", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Team",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:5273/api/team/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "team", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5273/api/user/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "user", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/user",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "user"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"name\": \"Alice Updated\",\n  \"email\": \"alice@example.com\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5273/api/user/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "user", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:5273/api/user/1",
+              "host": ["localhost"],
+              "port": "5273",
+              "path": ["api", "user", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

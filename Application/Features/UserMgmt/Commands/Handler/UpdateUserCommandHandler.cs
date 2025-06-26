@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Application.Services;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -24,6 +23,7 @@ public class UpdateUserCommandHandler: IRequestHandler<UpdateUserCommand, User>
             FullName = request.FullName,
             Email = request.Email,
             Role = role,
+            Password = request.Password
         };
         return await _userMgmtService.UpdateUserAsync(user);
     }
