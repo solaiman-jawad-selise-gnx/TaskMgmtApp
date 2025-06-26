@@ -20,7 +20,8 @@ public static class DependencyInjection
         services
             .AddScoped<ITaskMgmtService, TaskMgmtService>()
             .AddScoped<ITeamMgmtService, TeamMgmtService>()
-            .AddScoped<IUserMgmtService, UserMgmtService>();
+            .AddScoped<IUserMgmtService, UserMgmtService>()
+            .AddScoped<ILoginService, LoginService>();
     
     private static IServiceCollection AddApplicationCommandServices(this IServiceCollection services) =>
         services

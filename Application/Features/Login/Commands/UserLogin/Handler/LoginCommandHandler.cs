@@ -1,23 +1,22 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Login.Commands.UserLogin.Handler;
 
-public class LoginCommandHandler: IRequestHandler<LoginCommand, User?>
+public class LoginCommandHandler: IRequestHandler<LoginCommand, string>
 {
-    private readonly IUserMgmtService _userMgmtService;
+    private readonly ILoginService _loginService;
 
-    public LoginCommandHandler(IUserMgmtService userMgmtService)
+    public LoginCommandHandler(ILoginService loginService)
     {
-        _userMgmtService = userMgmtService;
+        _loginService = loginService;
     }
-    
-    public async Task<User?> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        // Validate the user credentials
-        var user = await _userMgmtService.ValidateUserCredentialsAsync(request.Email, request.Password);
-        return user;
+        var jwtToken = await _loginService.LoginAsync(request.Email, request.Password);
+        return jwtToken;
     }
     
 }
